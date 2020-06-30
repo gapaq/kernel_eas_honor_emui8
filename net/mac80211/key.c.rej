@@ -1,0 +1,23 @@
+--- net/mac80211/key.c
++++ net/mac80211/key.c
+@@ -647,11 +647,15 @@
+ {
+ 	struct ieee80211_local *local = sdata->local;
+ 	struct ieee80211_key *old_key;
+-	int idx, ret;
+-	bool pairwise;
+-
+-	pairwise = key->conf.flags & IEEE80211_KEY_FLAG_PAIRWISE;
+-	idx = key->conf.keyidx;
++	int idx = key->conf.keyidx;
++	bool pairwise = key->conf.flags & IEEE80211_KEY_FLAG_PAIRWISE;
++	/*
++	 * We want to delay tailroom updates only for station - in that
++	 * case it helps roaming speed, but in other cases it hurts and
++	 * can cause warnings to appear.
++	 */
++	bool delay_tailroom = sdata->vif.type == NL80211_IFTYPE_STATION;
++	int ret;
+ 
+ 	mutex_lock(&sdata->local->key_mtx);
+ 

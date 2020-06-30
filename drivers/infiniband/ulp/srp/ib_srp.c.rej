@@ -1,0 +1,11 @@
+--- drivers/infiniband/ulp/srp/ib_srp.c
++++ drivers/infiniband/ulp/srp/ib_srp.c
+@@ -2594,7 +2594,7 @@
+ {
+ 	struct srp_target_port *target = host_to_target(scmnd->device->host);
+ 	struct srp_rdma_ch *ch;
+-	int i;
++	int i, j;
+ 	u8 status;
+ 
+ 	shost_printk(KERN_ERR, target->scsi_host, "SRP reset_device called\n");

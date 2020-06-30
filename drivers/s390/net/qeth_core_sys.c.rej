@@ -1,0 +1,10 @@
+--- drivers/s390/net/qeth_core_sys.c
++++ drivers/s390/net/qeth_core_sys.c
+@@ -419,6 +419,7 @@
+ 	if (card->discipline) {
+ 		card->discipline->remove(card->gdev);
+ 		qeth_core_free_discipline(card);
++		card->options.layer2 = -1;
+ 	}
+ 
+ 	rc = qeth_core_load_discipline(card, newdis);
